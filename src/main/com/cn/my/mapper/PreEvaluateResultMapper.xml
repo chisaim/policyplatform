@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.my.mapper.PreEvaluateResultMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.my.model.PreEvaluateResult" >
+    <id column="taskid" property="taskid" jdbcType="INTEGER" />
+    <result column="prepolicy_fileid" property="prepolicy_fileid" jdbcType="INTEGER" />
+    <result column="premessage_fileid" property="premessage_fileid" jdbcType="INTEGER" />
+    <result column="prepolicy_number" property="prepolicy_number" jdbcType="INTEGER" />
+    <result column="premessage_number" property="premessage_number" jdbcType="INTEGER" />
+    <result column="target_message" property="target_message" jdbcType="INTEGER" />
+    <result column="target_policy" property="target_policy" jdbcType="INTEGER" />
+    <result column="recall_ratio" property="recall_ratio" jdbcType="DOUBLE" />
+    <result column="precision_ratio" property="precision_ratio" jdbcType="DOUBLE" />
+    <result column="task_starttime" property="task_starttime" jdbcType="TIMESTAMP" />
+    <result column="task_endtime" property="task_endtime" jdbcType="TIMESTAMP" />
+    <result column="task_status" property="task_status" jdbcType="INTEGER" />
+    <result column="userid" property="userid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    taskid, prepolicy_fileid, premessage_fileid, prepolicy_number, premessage_number, 
+    target_message, target_policy, recall_ratio, precision_ratio, task_starttime, task_endtime, 
+    task_status, userid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from pre_evaluate_result
+    where taskid = #{taskid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from pre_evaluate_result
+    where taskid = #{taskid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cn.my.model.PreEvaluateResult" >
+    insert into pre_evaluate_result (taskid, prepolicy_fileid, premessage_fileid, 
+      prepolicy_number, premessage_number, target_message, 
+      target_policy, recall_ratio, precision_ratio, 
+      task_starttime, task_endtime, task_status, 
+      userid)
+    values (#{taskid,jdbcType=INTEGER}, #{prepolicy_fileid,jdbcType=INTEGER}, #{premessage_fileid,jdbcType=INTEGER}, 
+      #{prepolicy_number,jdbcType=INTEGER}, #{premessage_number,jdbcType=INTEGER}, #{target_message,jdbcType=INTEGER}, 
+      #{target_policy,jdbcType=INTEGER}, #{recall_ratio,jdbcType=DOUBLE}, #{precision_ratio,jdbcType=DOUBLE}, 
+      #{task_starttime,jdbcType=TIMESTAMP}, #{task_endtime,jdbcType=TIMESTAMP}, #{task_status,jdbcType=INTEGER}, 
+      #{userid,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.my.model.PreEvaluateResult" >
+    insert into pre_evaluate_result
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="taskid != null" >
+        taskid,
+      </if>
+      <if test="prepolicy_fileid != null" >
+        prepolicy_fileid,
+      </if>
+      <if test="premessage_fileid != null" >
+        premessage_fileid,
+      </if>
+      <if test="prepolicy_number != null" >
+        prepolicy_number,
+      </if>
+      <if test="premessage_number != null" >
+        premessage_number,
+      </if>
+      <if test="target_message != null" >
+        target_message,
+      </if>
+      <if test="target_policy != null" >
+        target_policy,
+      </if>
+      <if test="recall_ratio != null" >
+        recall_ratio,
+      </if>
+      <if test="precision_ratio != null" >
+        precision_ratio,
+      </if>
+      <if test="task_starttime != null" >
+        task_starttime,
+      </if>
+      <if test="task_endtime != null" >
+        task_endtime,
+      </if>
+      <if test="task_status != null" >
+        task_status,
+      </if>
+      <if test="userid != null" >
+        userid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="taskid != null" >
+        #{taskid,jdbcType=INTEGER},
+      </if>
+      <if test="prepolicy_fileid != null" >
+        #{prepolicy_fileid,jdbcType=INTEGER},
+      </if>
+      <if test="premessage_fileid != null" >
+        #{premessage_fileid,jdbcType=INTEGER},
+      </if>
+      <if test="prepolicy_number != null" >
+        #{prepolicy_number,jdbcType=INTEGER},
+      </if>
+      <if test="premessage_number != null" >
+        #{premessage_number,jdbcType=INTEGER},
+      </if>
+      <if test="target_message != null" >
+        #{target_message,jdbcType=INTEGER},
+      </if>
+      <if test="target_policy != null" >
+        #{target_policy,jdbcType=INTEGER},
+      </if>
+      <if test="recall_ratio != null" >
+        #{recall_ratio,jdbcType=DOUBLE},
+      </if>
+      <if test="precision_ratio != null" >
+        #{precision_ratio,jdbcType=DOUBLE},
+      </if>
+      <if test="task_starttime != null" >
+        #{task_starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="task_endtime != null" >
+        #{task_endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="task_status != null" >
+        #{task_status,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.my.model.PreEvaluateResult" >
+    update pre_evaluate_result
+    <set >
+      <if test="prepolicy_fileid != null" >
+        prepolicy_fileid = #{prepolicy_fileid,jdbcType=INTEGER},
+      </if>
+      <if test="premessage_fileid != null" >
+        premessage_fileid = #{premessage_fileid,jdbcType=INTEGER},
+      </if>
+      <if test="prepolicy_number != null" >
+        prepolicy_number = #{prepolicy_number,jdbcType=INTEGER},
+      </if>
+      <if test="premessage_number != null" >
+        premessage_number = #{premessage_number,jdbcType=INTEGER},
+      </if>
+      <if test="target_message != null" >
+        target_message = #{target_message,jdbcType=INTEGER},
+      </if>
+      <if test="target_policy != null" >
+        target_policy = #{target_policy,jdbcType=INTEGER},
+      </if>
+      <if test="recall_ratio != null" >
+        recall_ratio = #{recall_ratio,jdbcType=DOUBLE},
+      </if>
+      <if test="precision_ratio != null" >
+        precision_ratio = #{precision_ratio,jdbcType=DOUBLE},
+      </if>
+      <if test="task_starttime != null" >
+        task_starttime = #{task_starttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="task_endtime != null" >
+        task_endtime = #{task_endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="task_status != null" >
+        task_status = #{task_status,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where taskid = #{taskid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.my.model.PreEvaluateResult" >
+    update pre_evaluate_result
+    set prepolicy_fileid = #{prepolicy_fileid,jdbcType=INTEGER},
+      premessage_fileid = #{premessage_fileid,jdbcType=INTEGER},
+      prepolicy_number = #{prepolicy_number,jdbcType=INTEGER},
+      premessage_number = #{premessage_number,jdbcType=INTEGER},
+      target_message = #{target_message,jdbcType=INTEGER},
+      target_policy = #{target_policy,jdbcType=INTEGER},
+      recall_ratio = #{recall_ratio,jdbcType=DOUBLE},
+      precision_ratio = #{precision_ratio,jdbcType=DOUBLE},
+      task_starttime = #{task_starttime,jdbcType=TIMESTAMP},
+      task_endtime = #{task_endtime,jdbcType=TIMESTAMP},
+      task_status = #{task_status,jdbcType=INTEGER},
+      userid = #{userid,jdbcType=INTEGER}
+    where taskid = #{taskid,jdbcType=INTEGER}
+  </update>
+</mapper>

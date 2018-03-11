@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+        http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.2.xsd">
+
+	<!-- 扫描控制器 -->
+	<context:component-scan base-package="com.cn.my.controler" />
+
+	<!-- 加载注解驱动 - ->
+	<mvc:annotation-driven conversion-service="conversionService"/>-->
+	<mvc:annotation-driven/>
+	
+	<!-- 定时任务驱动 -->
+	<task:annotation-driven/>
+
+	<!-- 扫描定时任务 -->
+    <context:component-scan base-package="com.cn.my.task" />
+
+	<!-- 解决数据绑定转换带来的问题，注释掉拦截静态网页资源 -->
+	<mvc:default-servlet-handler />
+	
+
+	<!-- 放弃拦截网页等静态资源 - ->
+	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+		<property name="converters">
+			<list>
+				<bean class="com.cn.my.model.TimestampConverter" p:timeStampPatttern="yyyy-MM-dd hh:mm:ss"/>
+			</list>
+		</property>
+	</bean> 
+	<mvc:resources location="/" mapping="/*.html" />
+	<mvc:resources location="/" mapping="/**/*.html" />
+	<mvc:resources location="/" mapping="/**/*.css" />
+	<mvc:resources location="/" mapping="/**/*.jpg" />
+	<mvc:resources location="/" mapping="/**/*.png" />
+	<mvc:resources location="/" mapping="/**/*.gif" />
+	<mvc:resources location="/" mapping="/**/*.js" />
+	<mvc:resources location="/" mapping="/**/**/*.css" />
+	<mvc:resources location="/" mapping="/**/**/**/*.png" />
+	-->
+
+	<!-- 用于处理文件上传时将上传的文件流解析成MultipartFile对象 -->
+	<bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 文件上传大小限制10M -->
+		<property name="maxUploadSize">
+			<value>10485760</value>
+		</property>
+		<!-- 请求编码格式 -->
+		<property name="defaultEncoding">
+			<value>UTF-8</value>
+		</property>
+	</bean>
+	
+	<!-- 配合@CrossOrigin注解解决跨域问题 -->
+	<bean class="com.cn.my.util.CorsConfigurerAdapter"></bean>
+</beans>

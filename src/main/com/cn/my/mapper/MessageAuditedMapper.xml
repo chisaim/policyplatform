@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.my.mapper.MessageAuditedMapper">
+	<resultMap id="BaseResultMap" type="com.cn.my.model.MessageAudited">
+		<id column="audited_id" property="audited_id" jdbcType="INTEGER" />
+		<result column="msg_id" property="msg_id" jdbcType="VARCHAR" />
+		<result column="monitoredtime" property="monitoredtime"
+			jdbcType="TIMESTAMP" />
+		<result column="callerid" property="callerid" jdbcType="VARCHAR" />
+		<result column="calledid" property="calledid" jdbcType="VARCHAR" />
+		<result column="content" property="content" jdbcType="VARCHAR" />
+		<result column="inspect_info" property="inspect_info" jdbcType="VARCHAR" />
+		<result column="servicetype" property="servicetype" jdbcType="INTEGER" />
+		<result column="inspect_level" property="inspect_level"
+			jdbcType="INTEGER" />
+		<result column="contentmd5" property="contentmd5" jdbcType="VARCHAR" />
+		<result column="contentsimhash" property="contentsimhash"
+			jdbcType="VARCHAR" />
+		<result column="repeatcount" property="repeatcount" jdbcType="INTEGER" />
+		<result column="createdtime" property="createdtime" jdbcType="TIMESTAMP" />
+		<result column="advertiser" property="advertiser" jdbcType="VARCHAR" />
+		<result column="auditedresult" property="auditedresult"
+			jdbcType="INTEGER" />
+		<result column="userid" property="userid" jdbcType="INTEGER" />
+		<result column="verifytime" property="verifytime" jdbcType="TIMESTAMP" />
+		<result column="content_origin" property="content-origin"
+			jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		audited_id, msg_id, monitoredtime, callerid, calledid,
+		content, inspect_info,
+		servicetype,
+		inspect_level, contentmd5,
+		contentsimhash, repeatcount, createdtime, advertiser,
+		auditedresult,
+		userid, verifytime, content_origin
+	</sql>
+	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
+		parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from sms_audited
+		where audited_id = #{audited_id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		sms_audited
+		where audited_id = #{audited_id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.cn.my.model.MessageAudited">
+		insert into sms_audited
+		(audited_id, msg_id, monitoredtime,
+		callerid, calledid, content,
+		inspect_info, servicetype, inspect_level,
+		contentmd5, contentsimhash,
+		repeatcount,
+		createdtime, advertiser, auditedresult,
+		userid, verifytime,
+		content_origin
+		)
+		values (#{audited_id,jdbcType=INTEGER},
+		#{msg_id,jdbcType=VARCHAR},
+		#{monitoredtime,jdbcType=TIMESTAMP},
+		#{callerid,jdbcType=VARCHAR}, #{calledid,jdbcType=VARCHAR},
+		#{content,jdbcType=VARCHAR},
+		#{inspect_info,jdbcType=VARCHAR},
+		#{servicetype,jdbcType=INTEGER},
+		#{inspect_level,jdbcType=INTEGER},
+		#{contentmd5,jdbcType=VARCHAR}, #{contentsimhash,jdbcType=VARCHAR},
+		#{repeatcount,jdbcType=INTEGER},
+		#{createdtime,jdbcType=TIMESTAMP},
+		#{advertiser,jdbcType=VARCHAR},
+		#{auditedresult,jdbcType=INTEGER},
+		#{userid,jdbcType=INTEGER}, #{verifytime,jdbcType=TIMESTAMP},
+		#{contentOrigin,jdbcType=VARCHAR}
+		)
+	</insert>
+
+	<insert id="insertRecords" parameterType="com.cn.my.model.MessageAudited">
+		insert into sms_audited (msg_id, monitoredtime,callerid, calledid,
+		content,inspect_info, servicetype, inspect_level,
+		contentmd5,
+		contentsimhash, repeatcount,createdtime, advertiser,
+		auditedresult,userid, verifytime, content_origin)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.msg_id,jdbcType=VARCHAR},
+			#{item.monitoredtime,jdbcType=TIMESTAMP},
+			#{item.callerid,jdbcType=VARCHAR}, #{item.calledid,jdbcType=VARCHAR},
+			#{item.content,jdbcType=VARCHAR},
+			#{item.inspect_info,jdbcType=VARCHAR},
+			#{item.servicetype,jdbcType=INTEGER},
+			#{item.inspect_level,jdbcType=INTEGER},
+			#{item.contentmd5,jdbcType=VARCHAR},
+			#{item.contentsimhash,jdbcType=VARCHAR},
+			#{item.repeatcount,jdbcType=INTEGER},
+			#{item.createdtime,jdbcType=TIMESTAMP},
+			#{item.advertiser,jdbcType=VARCHAR},
+			#{item.auditedresult,jdbcType=INTEGER},
+			#{item.userid,jdbcType=INTEGER},
+			#{item.verifytime,jdbcType=TIMESTAMP},
+			#{item.contentOrigin,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+
+	<insert id="insertSelective" parameterType="com.cn.my.model.MessageAudited">
+		insert into sms_audited
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="audited_id != null">
+				audited_id,
+			</if>
+			<if test="msg_id != null">
+				msg_id,
+			</if>
+			<if test="monitoredtime != null">
+				monitoredtime,
+			</if>
+			<if test="callerid != null">
+				callerid,
+			</if>
+			<if test="calledid != null">
+				calledid,
+			</if>
+			<if test="content != null">
+				content,
+			</if>
+			<if test="inspect_info != null">
+				inspect_info,
+			</if>
+			<if test="servicetype != null">
+				servicetype,
+			</if>
+			<if test="inspect_level != null">
+				inspect_level,
+			</if>
+			<if test="contentmd5 != null">
+				contentmd5,
+			</if>
+			<if test="contentsimhash != null">
+				contentsimhash,
+			</if>
+			<if test="repeatcount != null">
+				repeatcount,
+			</if>
+			<if test="createdtime != null">
+				createdtime,
+			</if>
+			<if test="advertiser != null">
+				advertiser,
+			</if>
+			<if test="auditedresult != null">
+				auditedresult,
+			</if>
+			<if test="userid != null">
+				userid,
+			</if>
+			<if test="verifytime != null">
+				verifytime,
+			</if>
+			<if test="contentOrigin != null">
+				content_origin,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="audited_id != null">
+				#{audited_id,jdbcType=INTEGER},
+			</if>
+			<if test="msg_id != null">
+				#{msg_id,jdbcType=VARCHAR},
+			</if>
+			<if test="monitoredtime != null">
+				#{monitoredtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="callerid != null">
+				#{callerid,jdbcType=VARCHAR},
+			</if>
+			<if test="calledid != null">
+				#{calledid,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				#{content,jdbcType=VARCHAR},
+			</if>
+			<if test="inspect_info != null">
+				#{inspect_info,jdbcType=VARCHAR},
+			</if>
+			<if test="servicetype != null">
+				#{servicetype,jdbcType=INTEGER},
+			</if>
+			<if test="inspect_level != null">
+				#{inspect_level,jdbcType=INTEGER},
+			</if>
+			<if test="contentmd5 != null">
+				#{contentmd5,jdbcType=VARCHAR},
+			</if>
+			<if test="contentsimhash != null">
+				#{contentsimhash,jdbcType=VARCHAR},
+			</if>
+			<if test="repeatcount != null">
+				#{repeatcount,jdbcType=INTEGER},
+			</if>
+			<if test="createdtime != null">
+				#{createdtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="advertiser != null">
+				#{advertiser,jdbcType=VARCHAR},
+			</if>
+			<if test="auditedresult != null">
+				#{auditedresult,jdbcType=INTEGER},
+			</if>
+			<if test="userid != null">
+				#{userid,jdbcType=INTEGER},
+			</if>
+			<if test="verifytime != null">
+				#{verifytime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="contentOrigin != null">
+				#{contentOrigin,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.cn.my.model.MessageAudited">
+		update sms_audited
+		<set>
+			<if test="msg_id != null">
+				msg_id = #{msg_id,jdbcType=VARCHAR},
+			</if>
+			<if test="monitoredtime != null">
+				monitoredtime = #{monitoredtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="callerid != null">
+				callerid = #{callerid,jdbcType=VARCHAR},
+			</if>
+			<if test="calledid != null">
+				calledid = #{calledid,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null">
+				content = #{content,jdbcType=VARCHAR},
+			</if>
+			<if test="inspect_info != null">
+				inspect_info = #{inspect_info,jdbcType=VARCHAR},
+			</if>
+			<if test="servicetype != null">
+				servicetype = #{servicetype,jdbcType=INTEGER},
+			</if>
+			<if test="inspect_level != null">
+				inspect_level = #{inspect_level,jdbcType=INTEGER},
+			</if>
+			<if test="contentmd5 != null">
+				contentmd5 = #{contentmd5,jdbcType=VARCHAR},
+			</if>
+			<if test="contentsimhash != null">
+				contentsimhash = #{contentsimhash,jdbcType=VARCHAR},
+			</if>
+			<if test="repeatcount != null">
+				repeatcount = #{repeatcount,jdbcType=INTEGER},
+			</if>
+			<if test="createdtime != null">
+				createdtime = #{createdtime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="advertiser != null">
+				advertiser = #{advertiser,jdbcType=VARCHAR},
+			</if>
+			<if test="auditedresult != null">
+				auditedresult = #{auditedresult,jdbcType=INTEGER},
+			</if>
+			<if test="userid != null">
+				userid = #{userid,jdbcType=INTEGER},
+			</if>
+			<if test="verifytime != null">
+				verifytime = #{verifytime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="contentOrigin != null">
+				content_origin = #{contentOrigin,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where audited_id = #{audited_id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.cn.my.model.MessageAudited">
+		update sms_audited
+		set msg_id = #{msg_id,jdbcType=VARCHAR},
+		monitoredtime =
+		#{monitoredtime,jdbcType=TIMESTAMP},
+		callerid =
+		#{callerid,jdbcType=VARCHAR},
+		calledid = #{calledid,jdbcType=VARCHAR},
+		content = #{content,jdbcType=VARCHAR},
+		inspect_info =
+		#{inspect_info,jdbcType=VARCHAR},
+		servicetype =
+		#{servicetype,jdbcType=INTEGER},
+		inspect_level =
+		#{inspect_level,jdbcType=INTEGER},
+		contentmd5 =
+		#{contentmd5,jdbcType=VARCHAR},
+		contentsimhash =
+		#{contentsimhash,jdbcType=VARCHAR},
+		repeatcount =
+		#{repeatcount,jdbcType=INTEGER},
+		createdtime =
+		#{createdtime,jdbcType=TIMESTAMP},
+		advertiser =
+		#{advertiser,jdbcType=VARCHAR},
+		auditedresult =
+		#{auditedresult,jdbcType=INTEGER},
+		userid = #{userid,jdbcType=INTEGER},
+		verifytime = #{verifytime,jdbcType=TIMESTAMP},
+		content_origin =
+		#{contentOrigin,jdbcType=VARCHAR}
+		where audited_id =
+		#{audited_id,jdbcType=INTEGER}
+	</update>
+
+	<update id="updateRepeatCountByMsgId" parameterType="java.util.List">
+		<foreach collection="list" item="item" index="index" open=""
+			close="" separator=";">
+			update sms_audited set repeatcount =
+			#{item.repeatcount} where msg_id = #{item.msg_id}
+		</foreach>
+	</update>
+
+	<select id="countPersonlAuditedNumToday" resultType="int">
+		select
+		count(audited_id) from sms_audited where userid = #{id} and
+		verifytime
+		&gt; #{date}
+	</select>
+
+	<select id="countTeamAuditedNumToday" resultType="int">
+		select
+		count(audited_id) from sms_audited where verifytime &gt; #{date}
+	</select>
+
+	<select id="countAllMessageAudited" resultType="int">
+		select count(audited_id) from sms_audited where verifytime &gt;
+		#{from} and verifytime &lt; #{to}
+		<if test="inspect_level!=null">and inspect_level = #{inspect_level} </if>
+		<if test="auditedresult!=null">and auditedresult = #{auditedresult} </if>
+	</select>
+
+	<select id="queryMessageAuditedByCondition" resultType="com.cn.my.model.MessageAudited">
+		select
+		<include refid="Base_Column_List" />
+		from sms_audited where verifytime &gt; #{from} and verifytime &lt;
+		#{to}
+		<if test="inspect_level!=null">and inspect_level = #{inspect_level} </if>
+		<if test="auditedresult!=null">and auditedresult = #{auditedresult} </if>
+		limit #{page},#{limit}
+	</select>
+
+	<select id="calculateWorkResultPerDay" resultType="com.cn.my.model.MapModel">
+		select userid
+		id,count(audited_id) number from sms_audited where verifytime
+		&gt;
+		#{from} and verifytime &lt; #{to} group by userid
+	</select>
+
+	<insert id="insertWorkResultPerDay">
+		<foreach collection="list" item="item" index="index" open="" close="" separator=";">
+			insert into evaluate_worker(userid,date,number,createtime) value(#{item.id},#{date},#{item.number},#{datetime})
+		</foreach>
+	</insert>
+	
+	<select id="getExamUserInfo" resultType="Integer">
+		select DISTINCT userid id from evaluate_worker where date &gt;
+		#{from} and date &lt; #{to} 
+	</select>
+	
+	<select id="countExamerData" resultType="int">
+		select count(id) from evaluate_worker where date &gt;
+		#{from} and date &lt; #{to} and userid = #{userid}
+	</select>
+	
+	<select id="queryExamerData" resultType="com.cn.my.model.EvaluateWorker">
+		select id,userid,date,number,createtime from evaluate_worker where date &gt;
+		#{from} and date &lt; #{to} and userid = #{userid} limit #{page},#{size}
+	</select>
+	
+	<select id="queryTargetMessage" resultType="com.cn.my.model.MessageAudited">
+		select <include refid="Base_Column_List" />
+		from sms_audited
+		where audited_id in 
+		<foreach collection="list" item="item" index="index" open="(" close=")" separator=",">
+			#{item}
+		</foreach>
+	</select>
+</mapper>

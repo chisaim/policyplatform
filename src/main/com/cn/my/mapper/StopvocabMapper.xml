@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.my.mapper.StopvocabMapper">
+    <select id="getStopvocab" resultType="com.cn.my.model.Stopvocab">
+		select id,stopword,wordtype,createdtime,fromid,status from stopvocab 
+		LIMIT #{limit},#{offset}
+	</select>
+	<select id="stopTotal" resultType="int">
+		SELECT COUNT(*) FROM stopvocab 
+	</select>
+	
+	
+	<insert id="addstopvocab" parameterType="com.cn.my.model.Stopvocab">
+		<selectKey resultType="int" keyProperty="id" order="AFTER">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+       insert into
+		stopvocab(stopword,wordtype,createdtime,fromid,status)
+		values(#{stopword},#{wordtype},#{createdtime},#{fromid},#{status})
+    </insert>
+    
+    <delete id="removestopvocab" parameterType="int">
+		delete from stopvocab where id = #{id}
+	</delete>
+	
+	<update id="editstopvocab" parameterType="com.cn.my.model.Stopvocab">  
+        update stopvocab set  
+        stopword=#{stopword},wordtype=#{wordtype},status=#{status}
+        where id=#{id}
+     </update>
+     
+     <select id="foundStopvocab" resultType="com.cn.my.model.Stopvocab">
+     	<bind name="pattern" value="'%'+stopword+'%'"/>
+		select id,stopword,wordtype,createdtime,fromid,status from stopvocab
+		 where stopword like #{pattern} 
+	</select> 
+	
+	<insert id="readFile2Database">
+		<foreach collection="list" item="item" index="index" separator=";">
+			insert into stopvocab
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+				<if test="item.stopword != null">stopword,</if>
+				<if test="item.wordtype != null">wordtype,</if>
+				<if test="item.status != null">status,</if>
+				fromid,createdtime,
+			</trim>
+			<trim prefix="values (" suffix=")" suffixOverrides=",">
+				<if test="item.stopword != null">#{item.stopword,jdbcType=VARCHAR},</if>
+				<if test="item.wordtype!= null">#{item.wordtype,jdbcType=INTEGER},</if>
+				<if test="item.status  != null">#{item.status,jdbcType=INTEGER},</if>
+					#{fromid,jdbcType=INTEGER},#{date,jdbcType=TIMESTAMP},
+			</trim>
+		</foreach>
+	</insert>
+	<select id="getAll" resultType="com.cn.my.model.Stopvocab">
+		select
+		stopword,wordtype,createdtime,fromid,status from stopvocab
+	</select>		
+</mapper>

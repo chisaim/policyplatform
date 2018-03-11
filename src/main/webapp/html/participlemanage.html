@@ -1,0 +1,21 @@
+<div class="participle" style="width: 100%; height: 100%;">
+	<table id="participleGrid" class="easyui-datagrid"
+		style="height: 517px;"
+		data-options="singleSelect:true,collapsible:true">
+	</table>
+	<!-- 表头工具栏 -->
+	<div id="head" style="padding: 5px; height: auto">
+		<a href="#" class="easyui-linkbutton" iconCls="icon-add" id="Padd">添加词条</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" id="Pedit">修改信息</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" id="Premove">删除词条</a>
+		<a href="/policyplatform/Participle/downloadModel" class="easyui-linkbutton" iconCls="icon-export" id='download'>下载模板</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-upload" id="Pupload">导入文件</a>
+		<a href="/policyplatform/Participle/exportData" class="easyui-linkbutton" iconCls="icon-export" id='export'>导出excel</a>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$.getScript("./js/participlemanage.js", function() {
+		console.log("participlemanage.js" + " 加载完毕...");
+	});
+</script>

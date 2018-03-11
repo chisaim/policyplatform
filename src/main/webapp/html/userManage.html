@@ -1,0 +1,19 @@
+<div class="userManage">
+	<table id="userManageGrid" class="easyui-datagrid" style="height:517px;" data-options="singleSelect:true,collapsible:true">
+	</table>
+	<div id="tb" style="padding:5px;height:auto">
+		<div>
+			用户名：<input id="userName" type="text" style="width: 80px;">
+			<a href="#" id="userQuery" class="easyui-linkbutton" iconCls="icon-search">查询</a>
+			<a href="#" id="userAdd" class="easyui-linkbutton" iconCls="icon-add">增加</a>
+			<a href="#" id="userEdit" class="easyui-linkbutton" iconCls="icon-edit">修改</a>
+			<a href="#" id="userDelete" class="easyui-linkbutton" iconCls="icon-remove">删除</a>
+		</div>
+	</div>
+	<script type="text/javascript">
+		$.getScript("./js/userManage.js",function(){
+			initUser();
+			console.log("userManage.js" + " 加载完毕...");
+		});
+	</script>
+</div>

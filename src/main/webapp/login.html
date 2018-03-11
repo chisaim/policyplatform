@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+	<!-- 避免IE使用兼容模式 -->
+	<meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1">
+	<title>垃圾短信策略运营平台 - 用户登录</title>
+	<link rel="stylesheet" href="./css/login.css">
+	
+	<script type="text/javascript" src="./js/jquery-1.7.2.min.js"></script>
+</head>
+<body>
+	<div class="box">
+		<div class="login-box">
+			<div class="login-title text-center">
+				<span class="flag"><i class="fa fa-user"></i> 用户登陆</span>
+				<h1>
+					<small>垃圾短信策略运营平台</small>
+				</h1>
+			</div>
+			<div class="login-content">
+				<div class="form">
+					<form id="modifyPassword" class="form-horizontal" action="#" method="post">
+						<div class="form-group">
+							<div class="input-group">
+								<i class="usericon"></i>
+								<input type="text" id="username" name="username" class="form-control" placeholder="用户名" value="">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="input-group">
+								<i class="passwordicon"></i>
+								<input type="password" id="password" name="password" class="form-control"
+								placeholder="密码" value="">
+							</div>
+						</div>
+						<div class="form-group form-actions">
+							<button type="button" id="login" class="btn btn-sm btn-success">
+								<span class="fa fa-check-circle"></span> 登录
+							</button>
+							<button type="button" id="reset" class="btn btn-sm btn-danger">
+								<span class="fa fa-close"></span> 重置
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="./js/login.js"></script>
+</body>
+</html>

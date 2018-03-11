@@ -1,0 +1,46 @@
+<div id="preStrategyManage" class="easyui-layout" data-options="fit:'true',overflow:'auto'">
+	<div id="preStrategyNorth" data-options="region:'north',split:true,collapsible:false" style="height:250px;">
+		<table id="preStrategyFileGrid" class="easyui-datagrid" data-options="collapsible:true">
+		</table>
+		<!--表头工具栏-->
+		<div id="tb" style="padding:5px;height:auto">
+			样本导入时间：<input id="dateFrom" class="easyui-datebox" style="width:90px" data-options="formatter:dataformatter,parser:dataparser" value="2018-1-1">
+			-<input id="dateTo" class="easyui-datebox" style="width:90px"  data-options="formatter:dataformatter,parser:dataparser" value="currentDate">
+			文件名：<input type="text" id="filename" style="width:90px">
+			<a href="#" id='preStrategyFileQuery' class="easyui-linkbutton" iconCls="icon-search">查询</a>
+			<a href="/policyplatform/evalute/downloadPreStrategyModel" id='downloadPreStrategyModel' class="easyui-linkbutton" iconCls="icon-export">下载模板</a>
+			<a href="#" id='uploadPreStrategy' class="easyui-linkbutton" iconCls="icon-upload">上传数据</a>
+		</div>
+	</div>
+	<div id="preStrategyCenter" data-options="region:'center'" style="padding:5px;">
+		<table id="preStrategyGrid" class="easyui-datagrid" data-options="collapsible:true,singleSelect:true">
+		</table>
+		<!--表头工具栏-->
+		<div id="tb" style="padding:5px;height:auto">
+			业务类型：<input value="" id="servicetype" style="width:90px"> &nbsp;&nbsp;
+			关键词分类：<input value="" id="kwclass" style="width:90px"> &nbsp;&nbsp;
+			关键词内容：<input type="text" id="keyword" style="width:90px"> &nbsp;&nbsp;
+			<a href="#" id='preStrategyQuery' class="easyui-linkbutton" iconCls="icon-search">查询</a> &nbsp;
+			<a href="#" id='preStrategyAdd' class="easyui-linkbutton" iconCls="icon-add">添加</a> &nbsp;
+			<a href="#" id='preStrategyEdit' class="easyui-linkbutton" iconCls="icon-edit">修改</a> &nbsp;
+			<a href="#" id='preStrategyDel' class="easyui-linkbutton" iconCls="icon-remove">删除</a> &nbsp;
+			<a href="#" id='preStrategyExport' class="easyui-linkbutton" iconCls="icon-export">导出</a> &nbsp;
+			<a href="#" id="true_export-btn" style="display:none;"><span id="exportPreStrategy">真●下载链接</span></a>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+		$.ajax({
+			type : 'GET',
+			url : './js/preStrategyManage.js',
+			async : false,
+			dataType : "script",
+			success : function(data) {
+				initPreStrategyManage();
+			},
+			error : function() {
+				msgShow("连接错误", "初始化失败!", "error");
+			}
+		});
+	</script>
+</div>

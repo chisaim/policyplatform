@@ -1,0 +1,45 @@
+<div id="sampleRepair" class="easyui-layout" data-options="fit:'true',overflow:'auto'">
+	<div id="sampleRepairNorth" data-options="region:'north',split:true,collapsible:false" style="height:250px;">
+		<table id="sampleRepairFileGrid" class="easyui-datagrid" data-options="collapsible:true">
+		</table>
+		<!--表头工具栏-->
+		<div id="tb" style="padding:5px;height:auto">
+			样本导入时间：<input id="dateFrom" class="easyui-datebox" style="width:90px" data-options="formatter:dataformatter,parser:dataparser" value="2018-1-1">
+			-<input id="dateTo" class="easyui-datebox" style="width:90px"  data-options="formatter:dataformatter,parser:dataparser" value="currentDate">
+			文件名：<input type="text" id="filename" style="width:90px">
+			<a href="#" id='sampleRepairFileQuery' class="easyui-linkbutton" iconCls="icon-search">查询</a>
+			<a href="/policyplatform/evalute/downloadPreMessageModel" id='downloadPreMessageModel' class="easyui-linkbutton" iconCls="icon-export">下载模板</a>
+			<a href="#" id='uploadMessage4PreEvaluate' class="easyui-linkbutton" iconCls="icon-upload">上传数据</a>
+		</div>
+	</div>
+	<div id="sampleRepairCenter" data-options="region:'center'" style="padding:5px;">
+		<table id="sampleRepairMessageGrid" class="easyui-datagrid" data-options="collapsible:true,singleSelect:true">
+		</table>
+		<!--表头工具栏-->
+		<div id="tb" style="padding:5px;height:auto">
+			业务类型：<input value="" id="business_type" style="width:90px"> &nbsp;&nbsp;
+			短信内容：<input type="text" id="message_content" style="width:90px"> &nbsp;&nbsp;
+			<a href="#" id='sampleRepairMessageQuery' class="easyui-linkbutton" iconCls="icon-search">查询</a> &nbsp;
+			<a href="#" id='sampleRepairMessageAdd' class="easyui-linkbutton" iconCls="icon-add">添加</a> &nbsp;
+			<a href="#" id='sampleRepairMessageEdit' class="easyui-linkbutton" iconCls="icon-edit">修改</a> &nbsp;
+			<a href="#" id='sampleRepairMessageDel' class="easyui-linkbutton" iconCls="icon-remove">删除</a> &nbsp;
+			<a href="#" id='sampleRepairMessageExport' class="easyui-linkbutton" iconCls="icon-export">导出</a> &nbsp;
+			<a href="#" id="true_export-btn" style="display:none;"><span id="exportPreMessage">真●下载链接</span></a>
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+		$.ajax({
+			type : 'GET',
+			url : './js/sampleRepair.js',
+			async : false,
+			dataType : "script",
+			success : function(data) {
+				initSampleRepair();
+			},
+			error : function() {
+				msgShow("连接错误", "初始化失败!", "error");
+			}
+		});
+	</script>
+</div>

@@ -1,0 +1,23 @@
+<div class="message_audit">
+	<table id="messageJunkGrid" class="easyui-datagrid" style="height:517px;" data-options="singleSelect:true,collapsible:true">
+	</table>
+	<!--表头工具栏-->
+	<div id="tb" style="padding:5px;height:auto">
+		数据入库时间: <input id="timeStart" class="easyui-datetimebox" data-options="formatter:datatimeformatter,parser:datatimeparser" style="width:130px" value="2018-1-1 00:00:00">
+		—&nbsp;<input id="timeEnd" class="easyui-datetimebox" data-options="formatter:datatimeformatter,parser:datatimeparser" style="width:130px" value="currentDate">
+		&nbsp;违规级别: <input id="illegalLevel" value="" style="width: 80px;">
+		&nbsp;数目: <input id="messageNumber" class="easyui-numberspinner" value='20' style="width:45px;" required="required" data-options="min:10,max:30,editable:false">
+		&nbsp;<a href="#" id="getMessageJunk" class="easyui-linkbutton" data-options="iconCls:'icon-get'">获取审核数据</a>
+		&nbsp;批量设置: <input id="batchMessageSet" value="0" style="width: 80px;">
+		&nbsp;<a href="#" id="batchMessageBtn" class="easyui-linkbutton" data-options="iconCls:'icon-set'">批量设置</a>
+		&nbsp;<a href="#" id="submitMessageAuditedBtn" class="easyui-linkbutton" data-options="iconCls:'icon-ok'">提交审核结果</a>
+		&nbsp;<a href="#" id='queryAuditedNumBtn' class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询已审记录数</a>
+		&nbsp;<a href="#" id='queryJUNKNumBtn' class="easyui-linkbutton" data-options="iconCls:'icon-search'">查询未审记录数</a>
+	</div>
+	<script type="text/javascript">
+		$.getScript("./js/message_audit.js", function() {
+			initMessageAudit();
+			console.log("message_audit.js" + " 加载完毕...");
+		});
+	</script>
+</div>

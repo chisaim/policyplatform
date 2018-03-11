@@ -1,0 +1,22 @@
+<div class="variant_word" style="width: 100%; height: 100%;">
+	<table id="variant_wordGrid" class="easyui-datagrid"
+		style="height: 517px;"
+		data-options="singleSelect:true,collapsible:true">
+	</table>
+	
+	<div id="head" style="padding: 5px; height: auto">
+		<a href="#" class="easyui-linkbutton" iconCls="icon-add" id="add">添加</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-edit" id="edit">修改</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-remove" id="remove">删除</a>
+		<a href="/policyplatform/Variant_word/downloadModel_va" class="easyui-linkbutton" iconCls="icon-export" id='download'>下载模板</a>
+		<a href="#" class="easyui-linkbutton" iconCls="icon-upload" id="uploadWord">导入文件</a>
+		<a href="/policyplatform/Variant_word/exportVar" class="easyui-linkbutton" iconCls="icon-export" id='exportVar'>导出excel</a>
+	</div>
+	
+	<script type="text/javascript">
+		$.getScript("./js/variant_wordManage.js", function(){
+			initvariant_wordManage();
+			console.log("variant_wordManage.js" + " 加载完毕...");
+		}); 
+	</script>
+</div>

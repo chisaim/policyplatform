@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.my.mapper.EvaluateResultMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.my.model.EvaluateResult" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="KEYWORD_ID" property="keyword_id" jdbcType="INTEGER" />
+    <result column="AUDITED_IDS" property="audited_ids" jdbcType="VARCHAR" />
+    <result column="RECALL_RATIO" property="recall_ratio" jdbcType="DOUBLE" />
+    <result column="PRECISION_RATIO" property="precision_ratio" jdbcType="DOUBLE" />
+    <result column="TOTAL_NUM" property="total_num" jdbcType="INTEGER" />
+    <result column="MISS_NUM" property="miss_num" jdbcType="INTEGER" />
+    <result column="TARGET_NUM" property="target_num" jdbcType="INTEGER" />
+    <result column="CREATE_TIME" property="create_time" jdbcType="TIMESTAMP" />
+    <result column="UPDATED_TIME" property="updated_time" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, KEYWORD_ID, AUDITED_IDS, RECALL_RATIO, PRECISION_RATIO, TOTAL_NUM, MISS_NUM, 
+    TARGET_NUM, CREATE_TIME, UPDATED_TIME
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from POLICY_POST_EVALUATION
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from POLICY_POST_EVALUATION
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cn.my.model.EvaluateResult" >
+    insert into POLICY_POST_EVALUATION (ID, KEYWORD_ID, AUDITED_IDS, 
+      RECALL_RATIO, PRECISION_RATIO, TOTAL_NUM, 
+      MISS_NUM, TARGET_NUM, CREATE_TIME, 
+      UPDATED_TIME)
+    values (#{id,jdbcType=INTEGER}, #{keyword_id,jdbcType=INTEGER}, #{audited_ids,jdbcType=VARCHAR}, 
+      #{recall_ratio,jdbcType=DOUBLE}, #{precision_ratio,jdbcType=DOUBLE}, #{total_num,jdbcType=INTEGER}, 
+      #{miss_num,jdbcType=INTEGER}, #{target_num,jdbcType=INTEGER}, #{create_time,jdbcType=TIMESTAMP}, 
+      #{updated_time,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.my.model.EvaluateResult" >
+    insert into POLICY_POST_EVALUATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="keyword_id != null" >
+        KEYWORD_ID,
+      </if>
+      <if test="audited_ids != null" >
+        AUDITED_IDS,
+      </if>
+      <if test="recall_ratio != null" >
+        RECALL_RATIO,
+      </if>
+      <if test="precision_ratio != null" >
+        PRECISION_RATIO,
+      </if>
+      <if test="total_num != null" >
+        TOTAL_NUM,
+      </if>
+      <if test="miss_num != null" >
+        MISS_NUM,
+      </if>
+      <if test="target_num != null" >
+        TARGET_NUM,
+      </if>
+      <if test="create_time != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updated_time != null" >
+        UPDATED_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="keyword_id != null" >
+        #{keyword_id,jdbcType=INTEGER},
+      </if>
+      <if test="audited_ids != null" >
+        #{audited_ids,jdbcType=VARCHAR},
+      </if>
+      <if test="recall_ratio != null" >
+        #{recall_ratio,jdbcType=DOUBLE},
+      </if>
+      <if test="precision_ratio != null" >
+        #{precision_ratio,jdbcType=DOUBLE},
+      </if>
+      <if test="total_num != null" >
+        #{total_num,jdbcType=INTEGER},
+      </if>
+      <if test="miss_num != null" >
+        #{miss_num,jdbcType=INTEGER},
+      </if>
+      <if test="target_num != null" >
+        #{target_num,jdbcType=INTEGER},
+      </if>
+      <if test="create_time != null" >
+        #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated_time != null" >
+        #{updated_time,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.my.model.EvaluateResult" >
+    update POLICY_POST_EVALUATION
+    <set >
+      <if test="keyword_id != null" >
+        KEYWORD_ID = #{keyword_id,jdbcType=INTEGER},
+      </if>
+      <if test="audited_ids != null" >
+        AUDITED_IDS = #{audited_ids,jdbcType=VARCHAR},
+      </if>
+      <if test="recall_ratio != null" >
+        RECALL_RATIO = #{recall_ratio,jdbcType=DOUBLE},
+      </if>
+      <if test="precision_ratio != null" >
+        PRECISION_RATIO = #{precision_ratio,jdbcType=DOUBLE},
+      </if>
+      <if test="total_num != null" >
+        TOTAL_NUM = #{total_num,jdbcType=INTEGER},
+      </if>
+      <if test="miss_num != null" >
+        MISS_NUM = #{miss_num,jdbcType=INTEGER},
+      </if>
+      <if test="target_num != null" >
+        TARGET_NUM = #{target_num,jdbcType=INTEGER},
+      </if>
+      <if test="create_time != null" >
+        CREATE_TIME = #{create_time,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updated_time != null" >
+        UPDATED_TIME = #{updated_time,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.my.model.EvaluateResult" >
+    update POLICY_POST_EVALUATION
+    set KEYWORD_ID = #{keyword_id,jdbcType=INTEGER},
+      AUDITED_IDS = #{audited_ids,jdbcType=VARCHAR},
+      RECALL_RATIO = #{recall_ratio,jdbcType=DOUBLE},
+      PRECISION_RATIO = #{precision_ratio,jdbcType=DOUBLE},
+      TOTAL_NUM = #{total_num,jdbcType=INTEGER},
+      MISS_NUM = #{miss_num,jdbcType=INTEGER},
+      TARGET_NUM = #{target_num,jdbcType=INTEGER},
+      CREATE_TIME = #{create_time,jdbcType=TIMESTAMP},
+      UPDATED_TIME = #{updated_time,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="countEvaluateResult" resultType="int">
+  	select count(ID) from POLICY_POST_EVALUATION
+  </select>
+  
+  <select id="queryEvaluateResult" resultType="com.cn.my.model.EvaluateResult">
+  	select 
+    <include refid="Base_Column_List" />
+    from POLICY_POST_EVALUATION limit #{page},#{limit}
+  </select>
+  
+  <insert id="insertPreEvaluateTaskInfo" parameterType="com.cn.my.model.PreEvaluateResult">
+  		<selectKey resultType="int" keyProperty="taskid" order="AFTER">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+  		insert into pre_evaluate_result(prepolicy_fileid,prepolicy_number,premessage_fileid,premessage_number,task_starttime,task_status,userid)
+  			value(#{prepolicy_fileid},#{prepolicy_number},#{premessage_fileid},#{premessage_number},#{task_starttime},#{task_status},#{userid})
+  </insert>
+</mapper>

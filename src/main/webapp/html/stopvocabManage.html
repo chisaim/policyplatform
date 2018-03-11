@@ -1,0 +1,46 @@
+<div class="stopvocabManage",id="stopvocabManagegriad">
+	<div id="stoptb" style="padding:5px;height:auto">
+		<div>
+			<a href="#" id="stopvocabAdd-btn" class="easyui-linkbutton" iconCls="icon-add">添加</a>
+			<a href="#" id='stopvocabRemove-btn' class="easyui-linkbutton" iconCls="icon-remove">删除</a>
+			停用词名称：<input type="text" id="stopwordname" name="" class="form-control" placeholder="请输入停用词名称" value="">
+			<a href="#" id='stopvocabFound-btn' class="easyui-linkbutton" iconCls="icon-search"  onclick="doSearch()">查询</a>
+		    <a href="/policyplatform/stopvocab/downloadModel" id='stopdownloadKeyword' class="easyui-linkbutton" iconCls="icon-export">下载模板</a>
+		    <a href="/policyplatform/stopvocab/exportdata" id='stopvocabExport' class="easyui-linkbutton"iconCls="icon-export">导出数据</a>
+		    <a href="#" id="stopupload" class="easyui-linkbutton" iconCls="icon-upload" >上传数据</a>
+		    <!-- <span>选择模式: </span>
+		    <select onchange="$('#stopdg').datagrid({singleSelect:(this.value==0)})">
+			<option value="0">单选</option>
+			<option value="1">多选</option> 
+			</select>
+			<input type="checkbox" checked onchange="$('#stopdg').datagrid({selectOnCheck:$(this).is(':checked')})" style="display:none"><br/>
+			<input type="checkbox" checked onchange="$('#stopdg').datagrid({checkOnSelect:$(this).is(':checked')})" style="display:none"> -->
+		</div>
+	</div>
+<!--添加的弹出框dialog  -->
+   <div id="stopadd" class="easyui-dialog" title="添加" style="width:400px;height:200px;" closed="true"
+      data-options="iconCls:'icon-save',resizable:true,modal:true">
+                      词名称：<input type="text" id="dialogname" name="" class="form-control" placeholder="请输入词名称" value=""><br/>
+                     词类型：<input type="text" id="dialogtype" name="" class="form-control" placeholder="请输入词类型" value=""> <br/>              
+                     <!-- 操作时间：<input type="datetime"  id="dialogtime" name="" class="form-control" placeholder="请输入操作时间" value=""><br/> -->
+                    <!--  来源ID：<input type="text" id="dialoguser" name="" class="form-control" placeholder="请输入来源ID" value=""><br/> -->
+                     状态：<input type="text" id="dialogstatus" name="" class="form-control" placeholder="请输入状态" value=""><br/> 
+           <br/>          
+      <div style="text-align:center; id="stopbb">
+	    <a href="#" class="easyui-linkbutton" id="dialogsave" >保存</a>
+	    <a href="#" class="easyui-linkbutton" id="dialogclose" >关闭</a>
+      </div>              
+   </div>
+   
+
+	<table id="stopdg" class="easyui-datagrid" style="width:auto;height:517px" toolbar="#stoptb">
+		
+	</table>
+	
+    <script type="text/javascript">
+		$.getScript("./js/stopvocabManage.js", function() {
+			console.log("stopvocabManage.js" + " 加载完毕...");
+		});
+     <!--绑定到添加按钮上的javascript-->
+	</script>
+</div>

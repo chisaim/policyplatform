@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.my.mapper.Special_charMapper">
+	<resultMap id="Special_charMap" type="com.cn.my.model.Special_char">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="spchar" property="spchar" jdbcType="VARCHAR"/>
+		<result column="fromid" property="fromid" jdbcType="INTEGER"/>	
+		<result column="createdtime" property="createdtime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<select id="getSpecial_chars" resultMap="Special_charMap">
+		SELECT id,spchar,fromid,createdtime FROM special_char
+		LIMIT #{limit},#{offset}
+	</select>
+	
+	<select id="getCount" resultType="int">
+		SELECT COUNT(*) FROM special_char
+	</select>
+	
+	<select id="getSpecial_char" resultMap="Special_charMap">
+		SELECT id,spchar,fromid,createdtime FROM special_char
+		where id=#{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getAll" resultMap="Special_charMap">
+		SELECT id,spchar,fromid,createdtime FROM special_char
+	</select>
+	
+	<delete id="deleteSpecial_char" parameterType="int">
+		DELETE FROM special_char 
+		WHERE id=#{id,jdbcType=INTEGER}
+	</delete>
+	
+	<update id="updateSpecial_char" parameterType="com.cn.my.model.Special_char">
+		UPDATE special_char SET
+		spchar=#{spchar,jdbcType=VARCHAR},fromid=#{fromid,jdbcType=INTEGER},createdtime=#{createdtime,jdbcType=TIMESTAMP}
+		WHERE id=#{id,jdbcType=INTEGER}
+	</update>
+	
+	<insert id="insertSpecial_char" parameterType="com.cn.my.model.Special_char" keyProperty="id">
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID();
+		</selectKey>
+		INSERT INTO
+		special_char(spchar,fromid,createdtime)VALUES
+		(#{spchar,jdbcType=VARCHAR},#{fromid,jdbcType=INTEGER},#{createdtime,jdbcType=TIMESTAMP})
+	</insert>
+	
+	<!-- 上传 -->
+	<insert id="uploadSp" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
+		 insert into special_char(spchar,fromid,createdtime) values
+		 	<foreach collection="list" item="item" index="index" separator=",">
+		 	(#{item.spchar,jdbcType=VARCHAR},#{item.fromid,jdbcType=INTEGER},#{item.createdtime,jdbcType=TIMESTAMP})
+		 	</foreach>
+	</insert>
+	
+</mapper>

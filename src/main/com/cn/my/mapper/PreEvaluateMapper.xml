@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.my.mapper.PreEvaluateMapper">
+	<insert id="insertfileinfo" useGeneratedKeys="true"  keyProperty="fileid" parameterType="com.cn.my.model.EvaluateFileInfo">
+		insert into
+		pre_evaluate_fileinfo(filename,datanumber,createtime,userid,filetype)
+		value(#{filename},#{datanumber},#{createtime},#{userid},#{filetype})
+	</insert>
+
+	<insert id="insertPreMessage">
+		insert into
+		pre_message(content,callerid,calledid,servicetype,auditedresult,createdate,fileid)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.content},#{item.callerid},#{item.calledid},#{item.servicetype},#{item.auditedresult},#{date},#{fileid})
+		</foreach>
+	</insert>
+	
+	<insert id="insertPreKeyword">
+		insert into pre_keyword(keyword,servicetype,kwclass,fileid,createdtime)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.keyword},#{item.servicetype},#{item.kwclass},#{fileid},#{date})
+		</foreach>
+	</insert>
+
+	<select id="countMessageFileByCondition" resultType="int">
+		<bind name="pattern" value="filename+'%'" />
+		select count(fileid) from pre_evaluate_fileinfo where createtime &gt;
+		#{from} and createtime &lt; #{to}
+		<if test="filename!=null and filename!=''">
+			and filename like #{pattern}
+		</if> and filetype = #{filetype} 
+	</select>
+
+	<sql id="Base_Column_PreMessage">
+		id,content,callerid,calledid,servicetype,createdate,fileid,auditedresult
+	</sql>
+	
+	<sql id="Base_Column_EvaluateFile">
+		fileid,filename,datanumber,createtime,userid,filetype
+	</sql>
+
+	<select id="queryPreFileInfo" resultType="com.cn.my.model.EvaluateFileInfo">
+		<bind name="pattern" value="filename+'%'" />
+		select <include refid="Base_Column_EvaluateFile"/>
+			from pre_evaluate_fileinfo where createtime &gt;
+				#{from} and createtime &lt; #{to}
+		<if test="filename!=null and filename!=''">
+			and filename like #{pattern}
+		</if> and filetype = #{filetype} 
+		limit #{page},#{limit}
+	</select>
+	
+	<select id="countPreMessageNumByCondition" resultType="int">
+		<bind name="pattern" value="'%'+content+'%'" />
+		select count(id) from pre_message where fileid = #{fileid}
+		<if test="content!=null and content!=''">
+			and content like #{pattern}
+		</if>
+		<if test="servicetype!=null">
+			and servicetype = #{servicetype}
+		</if>
+	</select>
+	
+	<select id="queryPreMessage" resultType="com.cn.my.model.PreMessage">
+		<bind name="pattern" value="'%'+content+'%'" />
+		select <include refid="Base_Column_PreMessage"/> from pre_message where fileid = #{fileid}
+		<if test="content!=null and content!=''">
+			and content like #{pattern}
+		</if>
+		<if test="servicetype!=null">
+			and servicetype = #{servicetype}
+		</if>
+		limit #{page},#{limit}
+	</select>
+	
+	<insert id="addPreEvaluateSms" parameterType="com.cn.my.model.PreMessage">
+		insert into pre_message(content,callerid,calledid,servicetype,createdate,fileid) 
+			value(#{content},#{callerid},#{calledid},#{servicetype},#{createdate},#{fileid})
+	</insert>
+	
+	<update id="recountDataNum" parameterType="Integer">
+		update pre_evaluate_fileinfo set datanumber = (select count(id) from pre_message where fileid = #{value}) where fileid = #{value}
+	</update>
+	
+	<update id="editPreEvaluateSms" parameterType="com.cn.my.model.PreMessage">
+		update pre_message set content=#{content},callerid=#{callerid},calledid=#{calledid},servicetype=#{servicetype} where id=#{id}
+	</update>
+	
+	<delete id="delPreEvaluateSms" parameterType="Integer">
+		delete from pre_message where id = #{id}
+	</delete>
+	
+	<select id="getMessageById" parameterType="Integer" resultType="com.cn.my.model.PreMessage">
+		select <include refid="Base_Column_PreMessage"/> from pre_message where id = #{value}
+	</select>
+	
+	<select id="countPreKeywordNumByCondition" resultType="int">
+		<bind name="pattern" value="'%'+keyword+'%'" />
+		select count(id) from pre_keyword where fileid = #{fileid}
+		<if test="keyword!=null and keyword!=''">
+			and keyword like #{pattern}
+		</if>
+		<if test="servicetype!=null">
+			and servicetype = #{servicetype}
+		</if>
+		<if test="kwclass!=null">
+			and kwclass = #{kwclass}
+		</if>
+	</select>
+	
+	<sql id="Base_Column_PreKeyword">
+		id,keyword,kwclass,servicetype,createdtime,fileid
+	</sql>
+	
+	<select id="queryPreKeyword" resultType="com.cn.my.model.PreKeyword">
+		<bind name="pattern" value="'%'+keyword+'%'" />
+		select <include refid="Base_Column_PreKeyword"/> from pre_keyword where fileid = #{fileid}
+		<if test="keyword!=null and keyword!=''">
+			and keyword like #{pattern}
+		</if>
+		<if test="servicetype!=null">
+			and servicetype = #{servicetype}
+		</if>
+		<if test="kwclass!=null">
+			and kwclass = #{kwclass}
+		</if>
+		limit #{page},#{limit}
+	</select>
+	
+	<insert id="addPreEvaluateKeyword" parameterType="com.cn.my.model.PreKeyword">
+		insert into pre_keyword(keyword,kwclass,servicetype,createdtime,fileid) 
+			value(#{keyword},#{kwclass},#{servicetype},#{createdtime},#{fileid})
+	</insert>
+	
+	<update id="recountDataNumPreKey" parameterType="Integer">
+		update pre_evaluate_fileinfo set datanumber = (select count(id) from pre_keyword where fileid = #{value}) where fileid = #{value}
+	</update>
+	
+	<update id="editPreEvaluateKeyword" parameterType="com.cn.my.model.PreKeyword">
+		update pre_keyword set keyword=#{keyword},kwclass=#{kwclass},servicetype=#{servicetype} where id=#{id}
+	</update>
+	
+	<select id="getKeywordById" parameterType="Integer" resultType="com.cn.my.model.PreKeyword">
+		select <include refid="Base_Column_PreKeyword"/> from pre_keyword where id = #{value}
+	</select>
+	
+	<delete id="delPreEvaluateKeyword" parameterType="Integer">
+		delete from pre_keyword where id = #{id}
+	</delete>
+	
+	<select id="getFileinfoByfileid" resultType="com.cn.my.model.EvaluateFileInfo">
+		select <include refid="Base_Column_EvaluateFile"/>
+			from pre_evaluate_fileinfo where fileid = #{value}
+	</select>
+	
+	<select id="getPreTaskAppid" parameterType="int" resultType="String">
+		select APP_ID from SPARK_TASK_STATUS where TASK_ID = #{value}
+	</select>
+	
+	<update id="insertSparkExcuatedStatus">
+		update SPARK_TASK_STATUS set STATUS = #{spark_status} where TASK_ID = #{task_id}
+	</update>
+	
+	<select id="countPreEvaluateResult" resultType="int">
+		select count(taskid) from pre_evaluate_result
+	</select>
+	
+	<select id="queryPreResult" resultType="com.cn.my.model.PreEvaluateResult">
+		select taskid,prepolicy_fileid,premessage_fileid,prepolicy_number,premessage_number,
+			target_message,target_policy,recall_ratio,precision_ratio,task_starttime,
+			task_endtime,task_status,userid
+		from pre_evaluate_result limit #{page},#{limit}
+	</select>
+	
+	<select id="countPreKeyWordBytaskId" resultType="int">
+		select count(ID) from POLICY_PRE_EVALUATION where TASK_ID = #{value}
+	</select>
+	
+	<select id="queryDataByTaskid" resultType="com.cn.my.model.PolicyPreEvaluation">
+		select ID,KEYWORD_ID,PRE_MESSAGE_IDS,TASK_ID,RECALL_RATIO,PRECISION_RATIO,
+			TOTAL_NUM,MISS_NUM,TARGET_NUM,CREATE_TIME,UPDATED_TIME
+		from POLICY_PRE_EVALUATION where TASK_ID = #{taskid} limit #{page},#{limit}
+	</select>
+	
+	<select id="queryPreMessagesByID" parameterType="java.util.List" resultType="com.cn.my.model.PreMessage">
+		select <include refid="Base_Column_PreMessage"/> from pre_message where id in 
+		<foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	<select id="countPreMessageLaji" resultType="int">
+		select count(id) from pre_message where auditedresult=1 and id in 
+		<foreach collection="list" item="item" index="index" separator="," open="(" close=")">
+			#{item}
+		</foreach>
+	</select>
+	
+	<update id="updatePreEvaluateResult" parameterType="com.cn.my.model.PreEvaluateResult">
+		update pre_evaluate_result set target_message = #{target_message},target_policy = #{target_policy},
+			recall_ratio = #{recall_ratio},precision_ratio = #{precision_ratio},task_endtime = #{task_endtime},
+			task_status = #{task_status} where taskid = #{taskid}
+	</update>
+</mapper>

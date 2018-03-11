@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.my.mapper.ParticipleMapper">
+
+	<resultMap id="ParticipleMap" type="com.cn.my.model.Participle">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="participle_type" property="participle_type" jdbcType="VARCHAR" />
+		<result column="Pcreate_time" property="Pcreate_time" jdbcType="TIMESTAMP" />
+		<result column="operator" property="operator" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<select id="getParticiple" resultMap="ParticipleMap">
+		select
+		name,participle_type,Pcreate_time,operator,remark from participle
+		where id=#{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="pageInfo" resultType="com.cn.my.model.Participle">
+		select
+		id,name,participle_type,operator,Pcreate_time,remark from participle
+		LIMIT #{limit},#{offset}
+	</select>
+	
+	<select id="getCount" resultType="int">
+		SELECT COUNT(*) FROM participle
+	</select>
+
+	<insert id="insertParticiple" parameterType="com.cn.my.model.Participle">
+		INSERT INTO
+		participle(name,participle_type,Pcreate_time,operator,remark)VALUES
+		(#{name,jdbcType=VARCHAR},#{participle_type,jdbcType=VARCHAR},#{Pcreate_time,jdbcType=TIMESTAMP},#{operator,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR})
+	</insert>
+
+	<update id="updateParticiple" parameterType="com.cn.my.model.Participle">
+		UPDATE participle SET
+		name=#{name,jdbcType=VARCHAR},participle_type=#{participle_type,jdbcType=VARCHAR},Pcreate_time=#{Pcreate_time,jdbcType=TIMESTAMP},operator=#{operator,jdbcType=VARCHAR},remark=#{remark,jdbcType=VARCHAR}
+		WHERE id=#{id,jdbcType=INTEGER}
+	</update>
+	
+	<delete id="deleteParticiple" parameterType="int">
+		DELETE FROM participle WHERE id=#{id,jdbcType=INTEGER}
+	</delete>
+	
+	<!-- 上传 -->
+	<insert id="uploadData">
+		<foreach collection="list" item="item" index="index" separator=";">
+			insert into participle
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+				<if test="item.name != null">name,</if>
+				<if test="item.participle_type != null">participle_type,</if>
+				<if test="item.remark != null">remark,</if>
+				operator,Pcreate_time,
+			</trim>
+			<trim prefix="values (" suffix=")" suffixOverrides=",">
+				<if test="item.name != null">#{item.name,jdbcType=VARCHAR},</if>
+				<if test="item.participle_type != null">#{item.participle_type,jdbcType=VARCHAR},</if>
+				<if test="item.remark != null">#{item.remark,jdbcType=VARCHAR},</if>
+					#{operator,jdbcType=VARCHAR},#{Pcreate_time,jdbcType=TIMESTAMP},
+			</trim>
+		</foreach>
+	</insert>
+	
+	<select id="getAll" resultMap="ParticipleMap">
+		select
+		name,participle_type,Pcreate_time,operator,remark from participle
+	</select>
+</mapper>

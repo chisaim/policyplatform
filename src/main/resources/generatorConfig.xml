@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<!-- mybatis自动生成代码插件配置文件 -->
+<generatorConfiguration >
+   <classPathEntry location="E:\repository\maven\mysql\mysql-connector-java\5.1.44\mysql-connector-java-5.1.44.jar" />  
+  <context id="context1" >
+  	<commentGenerator>
+  		<!-- 是否去除自动生成的注释  true：是  false:否-->
+  		<property name="suppressAllComments" value="true"/>
+  	</commentGenerator>
+  	<!-- 数据库连接配置 -->
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://192.168.102.117:3306/test" userId="root" password="bjjh123" />
+    <!-- 生成模型的包名和位置 -->
+    <javaModelGenerator targetPackage="com.cn.my.model" targetProject="policyplatform/src/main/java" />
+    <!-- 生成映射文件包名和位置 -->
+    <sqlMapGenerator targetPackage="com.cn.my.mapper" targetProject="policyplatform/src/main/java" />
+    <!-- 生成Dao包的位置 -->
+    <javaClientGenerator targetPackage="com.cn.my.mapper" targetProject="policyplatform/src/main/java" type="XMLMAPPER" />
+    <!-- 生成的表实体文件的配置 -->
+    <table schema="test" tableName="policy_keyword" domainObjectName="Keyword" 
+    	enableCountByExample="false" enableUpdateByExample="false"  
+            enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="true">
+      <columnOverride column="id" property="id"/>
+      <columnOverride column="level" property="level"/>
+      <columnOverride column="keyword" property="keyword"/>
+      <columnOverride column="unit" property="unit"/>
+      <columnOverride column="timespan" property="timespan"/>
+      <columnOverride column="monthreshold" property="monthreshold"/>
+      <columnOverride column="filterthreshold" property="filterthreshold"/>
+      <columnOverride column="abthreshold" property="abthreshold"/>
+      <columnOverride column="servicetype" property="servicetype"/>
+      <columnOverride column="kwclass" property="kwclass"/>
+      <columnOverride column="optype" property="optype"/>
+      <columnOverride column="userid" property="userid"/>
+      <columnOverride column="createdtime" property="createdtime"/>
+    </table>
+  </context>
+</generatorConfiguration>

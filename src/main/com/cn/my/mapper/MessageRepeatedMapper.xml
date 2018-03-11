@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.my.mapper.MessageRepeatedMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.my.model.MessageRepeated" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="msg_id" property="msg_id" jdbcType="VARCHAR" />
+    <result column="monitoredtime" property="monitoredtime" jdbcType="TIMESTAMP" />
+    <result column="callerid" property="callerid" jdbcType="VARCHAR" />
+    <result column="calledid" property="calledid" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="inspect_info" property="inspect_info" jdbcType="VARCHAR" />
+    <result column="servicetype" property="servicetype" jdbcType="INTEGER" />
+    <result column="inspect_level" property="inspect_level" jdbcType="INTEGER" />
+    <result column="contentmd5" property="contentmd5" jdbcType="VARCHAR" />
+    <result column="contentsimhash" property="contentsimhash" jdbcType="VARCHAR" />
+    <result column="createdtime" property="createdtime" jdbcType="TIMESTAMP" />
+    <result column="junk_id" property="junk_id" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, msg_id, monitoredtime, callerid, calledid, content, inspect_info, servicetype, 
+    inspect_level, contentmd5, contentsimhash, createdtime, junk_id
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sms_repeated
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sms_repeated
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cn.my.model.MessageRepeated" >
+    insert into sms_repeated (id, msg_id, monitoredtime, 
+      callerid, calledid, content, 
+      inspect_info, servicetype, inspect_level, 
+      contentmd5, contentsimhash, createdtime, 
+      junk_id)
+    values (#{id,jdbcType=INTEGER}, #{msg_id,jdbcType=VARCHAR}, #{monitoredtime,jdbcType=TIMESTAMP}, 
+      #{callerid,jdbcType=VARCHAR}, #{calledid,jdbcType=VARCHAR}, #{content,jdbcType=VARCHAR}, 
+      #{inspect_info,jdbcType=VARCHAR}, #{servicetype,jdbcType=INTEGER}, #{inspect_level,jdbcType=INTEGER}, 
+      #{contentmd5,jdbcType=VARCHAR}, #{contentsimhash,jdbcType=VARCHAR}, #{createdtime,jdbcType=TIMESTAMP}, 
+      #{junk_id,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.my.model.MessageRepeated" >
+    insert into sms_repeated
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="msg_id != null" >
+        msg_id,
+      </if>
+      <if test="monitoredtime != null" >
+        monitoredtime,
+      </if>
+      <if test="callerid != null" >
+        callerid,
+      </if>
+      <if test="calledid != null" >
+        calledid,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="inspect_info != null" >
+        inspect_info,
+      </if>
+      <if test="servicetype != null" >
+        servicetype,
+      </if>
+      <if test="inspect_level != null" >
+        inspect_level,
+      </if>
+      <if test="contentmd5 != null" >
+        contentmd5,
+      </if>
+      <if test="contentsimhash != null" >
+        contentsimhash,
+      </if>
+      <if test="createdtime != null" >
+        createdtime,
+      </if>
+      <if test="junk_id != null" >
+        junk_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="msg_id != null" >
+        #{msg_id,jdbcType=VARCHAR},
+      </if>
+      <if test="monitoredtime != null" >
+        #{monitoredtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="callerid != null" >
+        #{callerid,jdbcType=VARCHAR},
+      </if>
+      <if test="calledid != null" >
+        #{calledid,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="inspect_info != null" >
+        #{inspect_info,jdbcType=VARCHAR},
+      </if>
+      <if test="servicetype != null" >
+        #{servicetype,jdbcType=INTEGER},
+      </if>
+      <if test="inspect_level != null" >
+        #{inspect_level,jdbcType=INTEGER},
+      </if>
+      <if test="contentmd5 != null" >
+        #{contentmd5,jdbcType=VARCHAR},
+      </if>
+      <if test="contentsimhash != null" >
+        #{contentsimhash,jdbcType=VARCHAR},
+      </if>
+      <if test="createdtime != null" >
+        #{createdtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="junk_id != null" >
+        #{junk_id,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.my.model.MessageRepeated" >
+    update sms_repeated
+    <set >
+      <if test="msg_id != null" >
+        msg_id = #{msg_id,jdbcType=VARCHAR},
+      </if>
+      <if test="monitoredtime != null" >
+        monitoredtime = #{monitoredtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="callerid != null" >
+        callerid = #{callerid,jdbcType=VARCHAR},
+      </if>
+      <if test="calledid != null" >
+        calledid = #{calledid,jdbcType=VARCHAR},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="inspect_info != null" >
+        inspect_info = #{inspect_info,jdbcType=VARCHAR},
+      </if>
+      <if test="servicetype != null" >
+        servicetype = #{servicetype,jdbcType=INTEGER},
+      </if>
+      <if test="inspect_level != null" >
+        inspect_level = #{inspect_level,jdbcType=INTEGER},
+      </if>
+      <if test="contentmd5 != null" >
+        contentmd5 = #{contentmd5,jdbcType=VARCHAR},
+      </if>
+      <if test="contentsimhash != null" >
+        contentsimhash = #{contentsimhash,jdbcType=VARCHAR},
+      </if>
+      <if test="createdtime != null" >
+        createdtime = #{createdtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="junk_id != null" >
+        junk_id = #{junk_id,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.my.model.MessageRepeated" >
+    update sms_repeated
+    set msg_id = #{msg_id,jdbcType=VARCHAR},
+      monitoredtime = #{monitoredtime,jdbcType=TIMESTAMP},
+      callerid = #{callerid,jdbcType=VARCHAR},
+      calledid = #{calledid,jdbcType=VARCHAR},
+      content = #{content,jdbcType=VARCHAR},
+      inspect_info = #{inspect_info,jdbcType=VARCHAR},
+      servicetype = #{servicetype,jdbcType=INTEGER},
+      inspect_level = #{inspect_level,jdbcType=INTEGER},
+      contentmd5 = #{contentmd5,jdbcType=VARCHAR},
+      contentsimhash = #{contentsimhash,jdbcType=VARCHAR},
+      createdtime = #{createdtime,jdbcType=TIMESTAMP},
+      junk_id = #{junk_id,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="countRepeat" parameterType="java.util.List" resultType="java.util.HashMap">
+  	select junk_id keyFiled,count(id) valueFiled from sms_repeated where junk_id in 
+  	<foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+		#{item}
+  	</foreach>
+  	GROUP BY junk_id
+  </select>
+  
+</mapper>

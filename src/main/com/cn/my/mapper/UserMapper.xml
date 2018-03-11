@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.my.mapper.UserMapper">
+
+	<resultMap type="com.cn.my.model.MeanFirst" id="menus">
+		<result property="menuid" column="mean_first_code" />
+		<result property="menuname" column="mean_first" />
+		<collection property="menus" ofType="com.cn.my.model.MeanSecond">
+			<result property="menuid" column="mean_second_code" />
+			<result property="menuname" column="mean_second" />
+			<result property="url" column="url_path" />
+		</collection>
+	</resultMap>
+
+	<select id="test" resultType="String">
+		select user_name from user where id
+		= 12
+	</select>
+
+	<insert id="insertUser" parameterType="com.cn.my.model.User">
+		<selectKey resultType="int" keyProperty="id" order="AFTER">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+		insert into
+		user(user_name,pass_word,status,user_code,email,security_question,security_answer,
+		organization,name,sex,nation,birthday,native_place,qq,phone_number,residence,province,region,create_time)
+		values(#{user_name},#{pass_word},#{status},#{user_code},#{email},#{security_question},#{security_answer},
+		#{organization},#{name},#{sex},#{nation},#{birthday},#{native_place},#{qq},#{phone_number},#{residence},#{province},
+		#{region},#{create_time})
+	</insert>
+
+	<select id="loginCheck" resultType="com.cn.my.model.User">
+		select
+		id,user_name,pass_word,status,user_code,name,email,security_question,security_answer,organization,sex,nation,
+		birthday,native_place,qq,phone_number,residence,province,region from
+		user where user_name = #{user_name} and pass_word = #{pass_word}
+	</select>
+
+	<select id="getRoleByRoleId" parameterType="int"
+		resultType="com.cn.my.model.Role">
+		select
+		id,name,status,description,role_level_code,create_time,create_by from
+		role where id = #{roleId}
+	</select>
+
+	<insert id="insertRole" parameterType="com.cn.my.model.Role">
+		<selectKey resultType="int" keyProperty="id" order="AFTER">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+		insert into
+		role(name,status,description,role_level_code,create_time,create_by)
+		values(#{name},#{status},#{description},#{role_level_code},#{create_time},#{create_by})
+	</insert>
+
+	<insert id="insertRoleUserMap">
+		<selectKey resultType="int" keyProperty="id" order="AFTER">
+			SELECT
+			LAST_INSERT_ID()
+		</selectKey>
+		insert into user_map_role(user_id,role_id,create_time)
+		values(#{userId},#{roleId},#{time})
+	</insert>
+
+	<select id="getRoleIdFromMap" parameterType="int" resultType="int">
+		select role_id from user_map_role where user_id = #{userId}
+	</select>
+
+	<select id="getActionsByRoleIdList" parameterType="int"
+		resultType="com.cn.my.model.Action">
+		select id,action,action_name,action_column_id,action_path from action
+		where id in
+		<foreach collection="list" item="actionId" index="index" open="("
+			close=")" separator=",">
+			#{actionId}
+		</foreach>
+	</select>
+
+	<select id="getActionIdFromMap" parameterType="int" resultType="int">
+		select action_id from role_map_action where role_id = #{roleId}
+	</select>
+
+	<select id="getMeansByColumnIds" parameterType="int" resultMap="menus">
+		select
+		mean_first,mean_first_code,mean_second,mean_second_code,url_path from
+		action_column where action_column_id in
+		<foreach collection="array" item="action_column_id" index="index"
+			open="(" close=")" separator=",">
+			#{action_column_id}
+		</foreach>
+	</select>
+
+	<select id="getUsersByCode" parameterType="String" resultType="com.cn.my.model.User">
+		<bind name="pattern" value="_parameter+'%'" />
+		select
+		t1.id,t1.user_name,t1.status,t1.user_code,t1.email,t1.security_question,t1.security_answer,
+		t1.organization,t1.name,t1.sex,t1.nation,t1.birthday,t1.native_place,t1.qq,t1.phone_number,t1.residence,
+		t1.province,t1.region,t1.create_time,t3.name as role_name
+		from user
+		t1,user_map_role t2,role t3
+		where t1.id = t2.user_id and t2.role_id=t3.id and t1.user_code like
+		#{pattern}
+	</select>
+
+	<select id="getRoles" parameterType="String" resultType="com.cn.my.model.Role">
+		<bind name="pattern" value="_parameter+'%'" />
+		select
+		id,name,status,description,role_level_code,create_time,create_by from
+		role where role_level_code like #{pattern}
+	</select>
+
+	<select id="userUniqueCheck" parameterType="String" resultType="int">
+		select count(user_name) from user where user_name = #{value}
+	</select>
+
+	<select id="roleUniqueCheck" parameterType="String" resultType="int">
+		select count(name) from role where name = #{value}
+	</select>
+
+	<select id="getUserIdByUserName" parameterType="String"
+		resultType="int">
+		select id from user where user_name = #{value}
+	</select>
+
+	<select id="getRoleIdByRoleName" parameterType="String"
+		resultType="int">
+		select id from role where name = #{value}
+	</select>
+
+	<delete id="releaseMapUserRole" parameterType="int">
+		delete from
+		user_map_role where user_id = #{value}
+	</delete>
+
+	<delete id="releaseMapsUserRole" parameterType="int">
+		<foreach collection="list" item="item" index="index" separator=";">
+			delete from user_map_role where user_id = #{item}
+		</foreach>
+	</delete>
+
+	<delete id="deleteUserById" parameterType="int">
+		delete from user where id = #{value}
+	</delete>
+
+	<select id="getUserInfoById" parameterType="int"
+		resultType="com.cn.my.model.User">
+		select
+		t1.id,t1.user_name,t1.status,t1.user_code,t1.email,t1.security_question,t1.security_answer,
+		t1.organization,t1.name,t1.sex,t1.nation,t1.birthday,t1.native_place,t1.qq,t1.phone_number,t1.residence,
+		t1.province,t1.region,t1.create_time,t3.name as role_name
+		from user
+		t1,user_map_role t2,role t3
+		where t1.id = t2.user_id and t2.role_id=t3.id and t1.id = #{value}
+	</select>
+
+	<select id="getRoleByRole_name" parameterType="String"
+		resultType="com.cn.my.model.Role">
+		select
+		id,name,status,description,role_level_code,create_time,create_by from
+		role where name = #{value}
+	</select>
+
+	<update id="editUser" parameterType="com.cn.my.model.User">
+		update user set sex =
+		#{sex},name = #{name},security_question =
+		#{security_question},security_answer = #{security_answer},
+		organization = #{organization},status = #{status},phone_number =
+		#{phone_number},email = #{email},qq = #{qq},birthday = #{birthday},
+		residence = #{residence},nation = #{nation},native_place =
+		#{native_place},province = #{province},region = #{region} where
+		user_name = #{user_name}
+	</update>
+
+	<update id="updateRoleUserMap">
+		update user_map_role set role_id = #{roleId} where
+		user_id = #{userId}
+	</update>
+
+	<select id="getActionColIdBySecondCode" parameterType="String"
+		resultType="int">
+		select action_column_id from action_column where mean_second_code in
+		<foreach collection="list" item="mean_second_code" index="index"
+			open="(" close=")" separator=",">
+			#{mean_second_code}
+		</foreach>
+	</select>
+
+	<insert id="createRole" parameterType="com.cn.my.model.Role"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into
+		role(name,status,description,role_level_code,create_time,create_by)
+		values(#{name},#{status},#{description},#{role_level_code},#{create_time},#{create_by})
+	</insert>
+
+	<select id="getActionIdByActionColIds" parameterType="int"
+		resultType="int">
+		select id from action where action_column_id in
+		<foreach collection="list" item="action_column_id" index="index"
+			open="(" close=")" separator=",">
+			#{action_column_id}
+		</foreach>
+	</select>
+
+	<insert id="insertActionRoleMap" parameterType="java.util.HashMap">
+		<foreach collection="action_id" item="action_id" index="index" separator=";">
+			insert into role_map_action(role_id,action_id,create_time) values(#{role_id},#{action_id},#{create_time})
+		</foreach>
+	</insert>
+	
+	<delete id="editRoleRemove" parameterType="java.util.HashMap">
+		delete from
+		role_map_action where role_id = #{role_id} and action_id in 
+		<foreach collection="action_id" item="action_id" index="index" open="(" close=")" separator=",">
+			#{action_id}
+		</foreach>
+	</delete>
+	
+	<insert id="editRoleAdd" parameterType="java.util.HashMap">
+		<foreach collection="action_id" item="action_id" index="index" separator=";">
+			insert into role_map_action(role_id,action_id,create_time) values(#{role_id},#{action_id},#{create_time})
+		</foreach>
+	</insert>
+	
+	<select id="getRoleLevelCodeByRoleName" parameterType="String" resultType="String">
+		select role_level_code from role where name = #{value}
+	</select>
+	
+	<select id="getUserIByRoleId" parameterType="int" resultType="int">
+		select user_id from user_map_role where role_id = #{value}
+	</select>
+	
+	<update id="changeUserStatus" parameterType="int">
+		<foreach collection="list" item="item" index="index" separator=";">
+			update user set status = 0 where id = #{item}
+		</foreach>
+	</update>
+	
+	<delete id="deleteRoleById" parameterType="int">
+		delete from role where id = #{value}
+	</delete>
+	
+	<delete id="releaseMapRoleAction" parameterType="int">
+		delete from role_map_action where role_id = #{value}
+	</delete>
+	
+	<select id="getCreateByByRoleName" parameterType="String" resultType="int">
+		select create_by from role where name = #{value}
+	</select>
+	
+	<update id="changePwd">
+		update user set pass_word = #{pass_word} where id = #{userId}
+	</update>
+</mapper>

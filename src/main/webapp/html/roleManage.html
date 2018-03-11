@@ -1,0 +1,39 @@
+<div class="roleManage">
+	<div id="tb" style="padding: 5px; height: auto">
+			角色名称：<input id="roleName" type="text" style="width: 80px;"> <a
+				href="#" id="roleQuery" class="easyui-linkbutton"
+				iconCls="icon-search">查询</a> <a href="#" id="roleAdd"
+				class="easyui-linkbutton" iconCls="icon-add">增加</a> <a href="#"
+				id="roleEdit" class="easyui-linkbutton" iconCls="icon-edit">修改</a> <a
+				href="#" id="roleDelete" class="easyui-linkbutton"
+				iconCls="icon-remove">删除</a>
+	</div>
+	<table id="roleManageGrid" class="easyui-datagrid"
+		style="height: 517px;"
+		data-options="singleSelect:true,collapsible:true">
+	</table>
+</div>
+<!-- -->
+	<script type="text/javascript">
+		$.getScript("./js/roleManage.js",function(){
+			initRole();
+			console.log("roleManage.js" + " 加载完毕...");
+		});
+	</script>
+	
+<!--火狐浏览器中 大部分js文件加载时用上面的方法就行，但这个文件总是因为异步加载而导致初始化操作不执行，因此这样做会掉
+		谷歌无所谓 
+<script type="text/javascript">
+	$.ajax({
+		type : 'GET',
+		url : './js/roleManage.js',
+		async : false,
+		dataType : "script",
+		success : function(data) {
+			initRole();
+		},
+		error : function() {
+			msgShow("连接错误", "初始化失败!", "error");
+		}
+	});
+</script>-->

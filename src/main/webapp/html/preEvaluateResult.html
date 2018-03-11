@@ -1,0 +1,30 @@
+<div id="preEvaluate" class="easyui-layout" data-options="fit:'true',overflow:'auto'">
+	<div id="preEvaluateNorth" data-options="region:'north',split:true,collapsible:false" style="height:300px;">
+		<table id="preEvaluateResultGrid" class="easyui-datagrid" data-options="collapsible:true">
+		</table>
+		<div id="tb" style="padding:5px;height:auto">
+			<a href="#" id="addPreEvaluateTask" class="easyui-linkbutton" iconCls="icon-add">增加预评估任务</a>
+			<a href="#" id="refreshPreEvaluateTask" class="easyui-linkbutton" iconCls="icon-refresh">刷新数据</a>
+		</div>
+	</div>
+	
+	<div id="preEvaluateCenter" data-options="region:'center'" style="padding:5px;">
+		<div id="preEvaluateCenterSub" class="easyui-layout" data-options="fit:true">
+		<!-- 
+			<div id="preEvaluateCWest" data-options="region:'west',split:true,collapsible:false" style="width:500px;">
+			
+			</div>
+			<div  id="preEvaluateCCenter" data-options="region:'center'" style="padding:5px;">
+			
+			</div>
+			 -->
+		</div>
+	</div>
+	
+	<script type="text/javascript">
+		$.getScript("./js/preEvaluateResult.js", function() {
+			initPreEvaluateResult();
+			console.log("preEvaluateResult.js" + " 加载完毕...");
+		});
+	</script>
+</div>

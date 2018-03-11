@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.my.mapper.Variant_wordMapper">
+	<resultMap id="Variant_wordMap" type="com.cn.my.model.Variant_word">
+		<id column="id" property="id" jdbcType="INTEGER"/>
+		<result column="srcword" property="srcword" jdbcType="VARCHAR"/>
+		<result column="varword" property="varword" jdbcType="VARCHAR"/>
+		<result column="fromid" property="fromid" jdbcType="INTEGER"/>
+		<result column="createdtime" property="createdtime" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<select id="getVariant_words" resultMap="Variant_wordMap">
+		SELECT id,srcword,varword,fromid,createdtime FROM variant_word
+		LIMIT #{limit},#{offset}
+	</select>
+	
+	<select id="getCount" resultType="int">
+		SELECT COUNT(*) FROM variant_word
+	</select>
+	
+	<select id="getvariant_word" resultMap="Variant_wordMap">
+		SELECT id,srcword,varword,fromid,createdtime FROM variant_word
+		where id=#{id,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getAll" resultMap="Variant_wordMap">
+		SELECT id,srcword,varword,fromid,createdtime FROM variant_word
+	</select>
+	
+	<delete id="deleteVariant_word" parameterType="int">
+		DELETE FROM variant_word 
+		WHERE id=#{id,jdbcType=INTEGER}
+	</delete>
+	
+	<update id="updateVariant_word" parameterType="com.cn.my.model.Variant_word">
+		UPDATE variant_word SET
+		srcword=#{srcword,jdbcType=VARCHAR},varword=#{varword,jdbcType=VARCHAR},fromid=#{fromid,jdbcType=INTEGER},createdtime=#{createdtime,jdbcType=TIMESTAMP}
+		WHERE id=#{id,jdbcType=INTEGER}
+	</update>
+	
+	<insert id="insertVariant_word" parameterType="com.cn.my.model.Variant_word" keyProperty="id">
+		<selectKey keyProperty="id" resultType="int" order="AFTER">
+			select LAST_INSERT_ID();
+		</selectKey>
+		INSERT INTO variant_word(srcword,varword,fromid,createdtime)VALUES
+		(#{srcword,jdbcType=VARCHAR},#{varword,jdbcType=VARCHAR},#{fromid,jdbcType=INTEGER},#{createdtime,jdbcType=TIMESTAMP})
+	</insert>
+	
+			<!-- 上传 -->
+	<insert id="uploadWord" useGeneratedKeys="true" keyProperty="id" parameterType="java.util.List">
+			insert into variant_word (srcword,varword,fromid,createdtime) values
+			<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.srcword,jdbcType=VARCHAR},#{item.varword,jdbcType=VARCHAR},#{item.fromid,jdbcType=INTEGER},#{item.createdtime,jdbcType=TIMESTAMP})
+		</foreach>
+	</insert>
+</mapper>

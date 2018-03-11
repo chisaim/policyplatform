@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cn.my.mapper.KeyWordMapper">
+	<resultMap id="BaseResultMap" type="com.cn.my.model.Keyword">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="level" jdbcType="INTEGER" property="level" />
+		<result column="keyword" jdbcType="VARCHAR" property="keyword" />
+		<result column="unit" jdbcType="INTEGER" property="unit" />
+		<result column="timespan" jdbcType="INTEGER" property="timespan" />
+		<result column="monthreshold" jdbcType="INTEGER" property="monthreshold" />
+		<result column="filterthreshold" jdbcType="INTEGER" property="filterthreshold" />
+		<result column="abthreshold" jdbcType="INTEGER" property="abthreshold" />
+		<result column="servicetype" jdbcType="INTEGER" property="servicetype" />
+		<result column="kwclass" jdbcType="INTEGER" property="kwclass" />
+		<result column="optype" jdbcType="INTEGER" property="optype" />
+		<result column="userid" jdbcType="INTEGER" property="userid" />
+		<result column="createdtime" jdbcType="TIMESTAMP" property="createdtime" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, level, keyword, unit, timespan, monthreshold, filterthreshold,
+		abthreshold, servicetype,
+		kwclass, optype, userid, createdtime
+	</sql>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from policy_keyword
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from policy_keyword
+		where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.cn.my.model.Keyword">
+		insert into policy_keyword (keyword,
+		unit, timespan, monthreshold,
+		filterthreshold, abthreshold, servicetype,
+		kwclass, optype, userid,
+		createdtime)
+		values (#{keyword,jdbcType=VARCHAR},
+		#{unit,jdbcType=INTEGER}, #{timespan,jdbcType=INTEGER}, #{monthreshold,jdbcType=INTEGER},
+		#{filterthreshold,jdbcType=INTEGER}, #{abthreshold,jdbcType=INTEGER},
+		#{servicetype,jdbcType=INTEGER},
+		#{kwclass,jdbcType=INTEGER}, #{optype,jdbcType=INTEGER}, #{userid,jdbcType=INTEGER},
+		#{createdtime,jdbcType=TIMESTAMP})
+	</insert>
+	<insert id="insertSelective" parameterType="com.cn.my.model.Keyword">
+		insert into policy_keyword
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				id,
+			</if>
+			<if test="level != null">
+				level,
+			</if>
+			<if test="keyword != null">
+				keyword,
+			</if>
+			<if test="unit != null">
+				unit,
+			</if>
+			<if test="timespan != null">
+				timespan,
+			</if>
+			<if test="monthreshold != null">
+				monthreshold,
+			</if>
+			<if test="filterthreshold != null">
+				filterthreshold,
+			</if>
+			<if test="abthreshold != null">
+				abthreshold,
+			</if>
+			<if test="servicetype != null">
+				servicetype,
+			</if>
+			<if test="kwclass != null">
+				kwclass,
+			</if>
+			<if test="optype != null">
+				optype,
+			</if>
+			<if test="userid != null">
+				userid,
+			</if>
+			<if test="createdtime != null">
+				createdtime,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="id != null">
+				#{id,jdbcType=INTEGER},
+			</if>
+			<if test="level != null">
+				#{level,jdbcType=INTEGER},
+			</if>
+			<if test="keyword != null">
+				#{keyword,jdbcType=VARCHAR},
+			</if>
+			<if test="unit != null">
+				#{unit,jdbcType=INTEGER},
+			</if>
+			<if test="timespan != null">
+				#{timespan,jdbcType=INTEGER},
+			</if>
+			<if test="monthreshold != null">
+				#{monthreshold,jdbcType=INTEGER},
+			</if>
+			<if test="filterthreshold != null">
+				#{filterthreshold,jdbcType=INTEGER},
+			</if>
+			<if test="abthreshold != null">
+				#{abthreshold,jdbcType=INTEGER},
+			</if>
+			<if test="servicetype != null">
+				#{servicetype,jdbcType=INTEGER},
+			</if>
+			<if test="kwclass != null">
+				#{kwclass,jdbcType=INTEGER},
+			</if>
+			<if test="optype != null">
+				#{optype,jdbcType=INTEGER},
+			</if>
+			<if test="userid != null">
+				#{userid,jdbcType=INTEGER},
+			</if>
+			<if test="createdtime != null">
+				#{createdtime,jdbcType=TIMESTAMP},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.cn.my.model.Keyword">
+		update policy_keyword
+		<set>
+			<if test="level != null">
+				level = #{level,jdbcType=INTEGER},
+			</if>
+			<if test="keyword != null">
+				keyword = #{keyword,jdbcType=VARCHAR},
+			</if>
+			<if test="unit != null">
+				unit = #{unit,jdbcType=INTEGER},
+			</if>
+			<if test="timespan != null">
+				timespan = #{timespan,jdbcType=INTEGER},
+			</if>
+			<if test="monthreshold != null">
+				monthreshold = #{monthreshold,jdbcType=INTEGER},
+			</if>
+			<if test="filterthreshold != null">
+				filterthreshold = #{filterthreshold,jdbcType=INTEGER},
+			</if>
+			<if test="abthreshold != null">
+				abthreshold = #{abthreshold,jdbcType=INTEGER},
+			</if>
+			<if test="servicetype != null">
+				servicetype = #{servicetype,jdbcType=INTEGER},
+			</if>
+			<if test="kwclass != null">
+				kwclass = #{kwclass,jdbcType=INTEGER},
+			</if>
+			<if test="optype != null">
+				optype = #{optype,jdbcType=INTEGER},
+			</if>
+			<if test="userid != null">
+				userid = #{userid,jdbcType=INTEGER},
+			</if>
+			<if test="createdtime != null">
+				createdtime = #{createdtime,jdbcType=TIMESTAMP},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.cn.my.model.Keyword">
+		update policy_keyword
+		set level = #{level,jdbcType=INTEGER},
+		keyword = #{keyword,jdbcType=VARCHAR},
+		unit = #{unit,jdbcType=INTEGER},
+		timespan = #{timespan,jdbcType=INTEGER},
+		monthreshold = #{monthreshold,jdbcType=INTEGER},
+		filterthreshold = #{filterthreshold,jdbcType=INTEGER},
+		abthreshold = #{abthreshold,jdbcType=INTEGER},
+		servicetype = #{servicetype,jdbcType=INTEGER},
+		kwclass = #{kwclass,jdbcType=INTEGER},
+		optype = #{optype,jdbcType=INTEGER},
+		userid = #{userid,jdbcType=INTEGER},
+		createdtime = #{createdtime,jdbcType=TIMESTAMP}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<insert id="readFile2Database">
+		<foreach collection="list" item="item" index="index" separator=";">
+			insert into policy_keyword
+			<trim prefix="(" suffix=")" suffixOverrides=",">
+				<if test="item.keyword != null">keyword,</if>
+				<if test="item.unit != null">unit,</if>
+				<if test="item.timespan != null">timespan,</if>
+				<if test="item.monthreshold != null">monthreshold,</if>
+				<if test="item.filterthreshold != null">filterthreshold,</if>
+				<if test="item.abthreshold != null">abthreshold,</if>
+				<if test="item.servicetype != null">servicetype,</if>
+				<if test="item.kwclass != null">kwclass,</if>
+				<if test="item.optype != null">optype,</if>
+				userid,createdtime,
+			</trim>
+			<trim prefix="values (" suffix=")" suffixOverrides=",">
+				<if test="item.keyword != null">#{item.keyword,jdbcType=VARCHAR},</if>
+				<if test="item.unit != null">#{item.unit,jdbcType=INTEGER},</if>
+				<if test="item.timespan != null">#{item.timespan,jdbcType=INTEGER},</if>
+				<if test="item.monthreshold != null">#{item.monthreshold,jdbcType=INTEGER},</if>
+				<if test="item.filterthreshold != null">#{item.filterthreshold,jdbcType=INTEGER},</if>
+				<if test="item.abthreshold != null">#{item.abthreshold,jdbcType=INTEGER},</if>
+				<if test="item.servicetype != null">#{item.servicetype,jdbcType=INTEGER},</if>
+				<if test="item.kwclass != null">#{item.kwclass,jdbcType=INTEGER},</if>
+				<if test="item.optype != null">#{item.optype,jdbcType=INTEGER},</if>
+					#{userid,jdbcType=INTEGER},#{date,jdbcType=TIMESTAMP},
+			</trim>
+		</foreach>
+	</insert>
+	
+	<select id="countKeyword" resultType="int">
+		select count(id) from policy_keyword
+	</select>
+	
+	<select id="queryKeywordByPage" resultMap="BaseResultMap">
+		select 
+			<include refid="Base_Column_List"/>
+		from policy_keyword limit #{offset},#{limit}
+	</select>
+</mapper>

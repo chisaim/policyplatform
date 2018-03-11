@@ -1,0 +1,18 @@
+<div id="evaluateResult" class="easyui-layout" data-options="fit:'true',overflow:'auto'">
+	<div id="evaluateNorth" data-options="region:'north',split:true,collapsible:false" style="height:300px;">
+		<table id="evaluateResultGrid" class="easyui-datagrid" data-options="collapsible:true">
+		</table>
+	</div>
+	
+	<div id="evaluateCenter" data-options="region:'center'" style="padding:5px;">
+		<table id="evaluateMessageGrid" class="easyui-datagrid" data-options="collapsible:true,singleSelect:true">
+		</table>
+	</div>
+	
+	<script type="text/javascript">
+		$.getScript("./js/evaluateResult.js", function() {
+			initEvaluateResult()
+			console.log("evaluateResult.js" + " 加载完毕...");
+		});
+	</script>
+</div>

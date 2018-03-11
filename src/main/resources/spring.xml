@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd    
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd    
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+
+	<!-- 开启注解配置 -->
+	<context:annotation-config />
+
+	<!-- 加载数据库配置文件 -->
+	<context:property-placeholder location="classpath:db.properties" />
+
+	<!-- 开启事务注解驱动 -->
+	<tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
+
+	 <!-- 扫描服务实现类 -->
+    <context:component-scan base-package="com.cn.my.service.impl"/>
+    <!-- 扫描mybatis的mapper -->
+    <mybatis:scan base-package="com.cn.my.mapper" />
+
+	    <!-- 数据源 dbcp-->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+		    <property name="driverClassName" value="${jdbc.driver}"/>
+		    <property name="url" value="${jdbc.url}"/>
+		    <property name="username" value="${jdbc.username}"/>
+		    <property name="password" value="${jdbc.password}"/>
+			<!-- 连接初始值，连接池启动时创建的连接数量的初始值  默认值是0 -->  
+    		<property name="initialSize" value="3" />  
+   			<!-- 最小空闲值.当空闲的连接数少于阀值时，连接池就会预申请去一些连接，以免洪峰来时来不及申请  默认值是0 -->  
+    		<property name="minIdle" value="3" />  
+    		<!-- 最大空闲值.当经过一个高峰时间后，连接池可以慢慢将已经用不到的连接慢慢释放一部分，一直减少到maxIdle为止 ，0时无限制  默认值是8 -->  
+    		<property name="maxIdle" value="5" />  
+   			<!-- 连接池的最大值，同一时间可以从池分配的最多连接数量，0时无限制   默认值是8 -->  
+    		<property name="maxTotal" value="15" /> 
+        	<!-- 连接Idle一个小时后超时 -->  
+        	<property name="timeBetweenEvictionRunsMillis" value="3600000" />  
+        	<property name="minEvictableIdleTimeMillis" value="3600000" />  
+    </bean>
+    
+    <!-- sqlSessionFactory -->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    	<!-- 加载mybatis配置文件 -->
+    	<property name="configLocation" value="classpath:mybatis.xml"/>
+    	<!-- 数据源 -->
+    	<property name="dataSource" ref="dataSource"/>
+    </bean>
+    
+    <bean id="springtool" class="com.cn.my.util.SpringTool"/>
+    
+    <!-- 事务管理器 -->  
+    <bean id="transactionManager"  
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">  
+        <property name="dataSource" ref="dataSource" />  
+    </bean>
+	
+	<!-- redis -->
+	<bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+		<constructor-arg name="host" value="192.168.102.166"/>	
+		<constructor-arg name="port" value="6379"/>	
+	</bean>
+</beans>
